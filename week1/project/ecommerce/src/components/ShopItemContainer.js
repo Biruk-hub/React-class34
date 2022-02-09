@@ -10,10 +10,10 @@ const ShopItemContainer = () => {
   const handleCategory = (category) => {
     setCategory(category);
   };
-// ctrl + ` => open terminal
+  
   useEffect(() => {
     ProductList();
-  },[category]);
+  });
 
   const ProductList = () => {
     const itemCategory = category.split("FAKE: ")[1];
