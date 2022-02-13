@@ -12,10 +12,11 @@ const ShopItemContainer = () => {
   };
   
   useEffect(() => {
-    ProductList();
-  });
+    ProductList(category);
+  },[category]);
 
-  const ProductList = () => {
+  const ProductList = (category) => {
+    console.log(category);
     const itemCategory = category.split("FAKE: ")[1];
     if (category === "all") {
       const products = FakeProduct;
@@ -52,7 +53,7 @@ const ShopItemContainer = () => {
         </div>
       </div>
       {/* item container */}
-      <div className="w-full flex flex-row p-2 mx-auto flex-wrap justify-center gap-6">{ProductList()}</div>
+      <div className="w-full flex flex-row p-2 mx-auto flex-wrap justify-center gap-6">{ProductList(category)}</div>
     </div>
   );
 };
