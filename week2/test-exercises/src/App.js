@@ -5,7 +5,7 @@ import UserDetailsForm from "./2-UserDetailsForm";
 import ChuckNorrisJoke from "./3-ChuckNorrisJoke";
 
 function App() {
-  /**
+  /*
    * We just render the components in the simplest way possible so you can see them in the UI to get an idea what they do.
    * As you can see we haven't done any styling ;)
    */

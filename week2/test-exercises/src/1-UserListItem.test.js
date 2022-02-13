@@ -17,8 +17,19 @@ const testUser = {
 };
 
 describe("UserListItem", () => {
-  it("Displays all of the fields ", () => {
-    // TODO: FILL THIS IN
-    expect(true).toBe(false);
+  test('Render the UserListItem in the dom', () => {
+    render(<UserListItem user={testUser} />);
+    const liElement = screen.getByRole("listitem");
+    expect(liElement).toBeInTheDocument();
   });
+  test('Render the UserListItem with the given props', () => {
+    render(<UserListItem user={testUser} />);
+    const liElement = screen.getByText('John Doe (Admin)');
+    expect(liElement).toBeInTheDocument();
+  });
+  test('Throw error when rendering UserListItem with out props', () => {
+    expect(() => {
+      render(<UserListItem />);
+    }).toThrow();
+  })
 });
