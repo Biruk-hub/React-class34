@@ -4,7 +4,7 @@ import ShopItemContainer from "./components/ShopItemContainer";
 const App = () => {
  
   return (
-    <div className="bg-gray-200">
+    <div className="">
       <ShopItemContainer />
     </div>
   );

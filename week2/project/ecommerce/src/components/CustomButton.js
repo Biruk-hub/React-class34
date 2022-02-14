@@ -1,17 +1,17 @@
 import React from "react";
 
-const CustomButton = ({ text, value, setValue, active }) => {
+const CustomButton = ({ text, onClick, active }) => {
   return (
     <button
-      onClick={() => setValue(value)}
+      onClick={() => onClick(text)}
       className={
         active
-          ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          : "text-gray-800 hover:text-blue-500 font-bold py-2 px-4 "
+          ? "text-blue-500 bg-blue-100 text-base font-semibold py-1 px-4 rounded-full"
+          : "text-gray-600 hover:bg-blue-100 text-base font-semibold py-1 px-4 rounded-full"          
       }
     >
-      <span className="text-xl">
-        <i className="fas fa-plus">{text}</i>
+      <span className="">
+        {text}
       </span>
     </button>
   );

@@ -1,59 +1,24 @@
-import React, { useEffect, useState } from "react";
-import CustomButton from "./CustomButton";
-import ShopItem from "./ShopItem";
-import FakeCategories from "./../fake-data/all-categories";
-import FakeProduct from "./../fake-data/all-products";
+import React, { useState } from "react";
+import CustomButtonController from "./CustomButtonController";
+import ShopItemController from "./ShopItemController";
 
 const ShopItemContainer = () => {
-  const [category, setCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const handleCategory = (category) => {
-    setCategory(category);
-  };
-  
-  useEffect(() => {
-    ProductList(category);
-  },[category]);
-
-  const ProductList = (category) => {
-    console.log(category);
-    const itemCategory = category.split("FAKE: ")[1];
-    if (category === "all") {
-      const products = FakeProduct;
-      return (
-          products.map((product, index) => (
-            <ShopItem key={index} data={product} />
-          ))
-      );
-    } else {
-      const products = FakeProduct.filter(
-        (item) => item.category === itemCategory
-      );
-      return (products.map((product, index) => (
-            <ShopItem key={index} data={product} />
-          ))
-      );
-    }
+    setSelectedCategory(category);
   };
 
   return (
     <div className="w-screen h-auto">
-      {/* button container */}
       <div className="flex justify-center items-center bg-white">
-        <div className="p-5 space-x-6">
-          {FakeCategories.map((fakeCategory, index) => (
-            <CustomButton
-              key={index}
-              text={fakeCategory}
-              value={fakeCategory}
-              setValue={handleCategory}
-              active = { fakeCategory ? category === fakeCategory : false}
-            />
-          ))}
+        <div className="mb-2 p-5 space-x-6 border-b-2 border-gray-300">
+          <CustomButtonController categoryHandler={handleCategory} />
         </div>
       </div>
-      {/* item container */}
-      <div className="w-full flex flex-row p-2 mx-auto flex-wrap justify-center gap-6">{ProductList(category)}</div>
+      <div className="bg-gray-100 w-full flex flex-row p-2 mx-auto flex-wrap justify-center gap-6">
+        <ShopItemController selectedCategory={selectedCategory} />
+      </div>
     </div>
   );
 };
