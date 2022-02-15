@@ -10,7 +10,6 @@ function RandomJoke() {
     fetch(APIURL)
       .then((response) => response.json())
       .then((result) => {
-        console.log("result from api call", result);
         setJoke(() => result.value.joke);
       })
       .catch((err) => {
