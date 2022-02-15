@@ -13,7 +13,6 @@ function RandomJoke() {
         setJoke(() => result.value.joke);
       })
       .catch((err) => {
-        // console.log("error from api call ", err);
         setError(true);
       })
       .finally(() => {
