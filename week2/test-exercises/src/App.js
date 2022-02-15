@@ -1,19 +1,24 @@
-import React from "react";
-
+import React, { useState } from "react";
 import UserListItem from "./1-UserListItem";
 import UserDetailsForm from "./2-UserDetailsForm";
 import ChuckNorrisJoke from "./3-ChuckNorrisJoke";
 
 function App() {
-  /*
-   * We just render the components in the simplest way possible so you can see them in the UI to get an idea what they do.
-   * As you can see we haven't done any styling ;)
-   */
+  const [users, setUsers] = useState([]);
+  const addUser = (user) => {
+    console.log(users);
+    const newUser = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    };
+    setUsers([...users, newUser]);
+  };
   return (
     <div>
-      <UserListItem
-        user={{ firstName: "John", lastName: "Doe", role: "Admin" }}
-      />
+      {users.map((user, index) => (
+        <UserListItem key={index} user={user} />
+      ))}
       <hr />
       <UserDetailsForm
         initialUserValues={{
@@ -21,7 +26,7 @@ function App() {
           lastName: "Doe",
           role: "Admin",
         }}
-        onSubmit={() => {}}
+        onSubmit={addUser}
       />
       <hr />
       <ChuckNorrisJoke />

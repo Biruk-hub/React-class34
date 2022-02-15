@@ -1,12 +1,3 @@
-/**
- * This is an example of a typical custom component to have input fields to change your user details.
- * Sometimes you want to use an actual <form> element, but if you want to have full control over all the variables you can implement it like this
- *
- * The props:
- * - initialUserValues -> These are the initial values the form should have. This will be what the parent component will provide from the backend
- * - onSubmit -> This function will be called with an object containing the firstName, lastName and role that the user has filled in
- */
-
 import { useState } from "react";
 
 function UserDetailsForm({ initialUserValues, onSubmit }) {
@@ -46,7 +37,7 @@ function UserDetailsForm({ initialUserValues, onSubmit }) {
       <button
         type="submit"
         onClick={() => {
-          onSubmit({ firstName, lastName, role });
+          onSubmit({ firstName: firstName, lastName: lastName, role: role });
         }}
       >
         Submit

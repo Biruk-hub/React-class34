@@ -1,15 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-
 import UserDetailsForm from "./2-UserDetailsForm";
-
-/**
- * UserDetailsForm is a component that has some user interaction so is a little more complex.
- *
- * A nice way of thinking about what to test is to look at the steps the user can take when they interact with this component. So:
- * - Read the current information (check that this is correct based on the prop)
- * - Change a field (check that the changes are applied in the UI)
- * - Click on the Submit button (check that the fields are sent to the function)
- */
 
 const testUser = {
   firstName: "John",
@@ -23,19 +13,33 @@ const changedUser = {
 };
 
 describe("UserDetailsForm", () => {
-  it("Correctly fills in the initial values", () => {
-    // TODO: Fill in!
-    expect(true).toBe(false);
+  test("Correctly fills in the initial values", () => {
+    render(<UserDetailsForm initialUserValues={testUser} />);
+    expect(screen.getByLabelText("First name:").value).toBe(testUser.firstName);
+    expect(screen.getByLabelText("Last name:").value).toBe(testUser.lastName);
+    expect(screen.getByLabelText("Role:").value).toBe(testUser.role);
   });
-
-  it("Correctly changes a fields value", () => {
-    // TODO: Fill in!
-    expect(true).toBe(false);
-  });
-
-  it("Submits the right values to the onSubmit function", () => {
-    // TODO: Fill in!
-    // TIP: You will need to mock the onSubmit function prop so you can check that it was called and what it was called with! Have a look at `jest.fn`
-    expect(true).toBe(false);
-  });
+  test("Correctly changes a fields value", () => {
+    render(<UserDetailsForm initialUserValues={testUser} />);
+    // change the value
+    fireEvent.change(screen.getByLabelText("First name:"), {target: { value: changedUser.firstName },});
+    fireEvent.change(screen.getByLabelText("Last name:"), {target: { value: changedUser.lastName },});
+    fireEvent.change(screen.getByLabelText("Role:"), {target: { value: changedUser.role },});
+    // check that the value has changed
+    expect(screen.getByLabelText("First name:").value).toBe(changedUser.firstName);
+    expect(screen.getByLabelText("Last name:").value).toBe(changedUser.lastName);
+    expect(screen.getByLabelText("Role:").value).toBe(changedUser.role);
+  })
+  test("Submit the right values to the onSubmit function", () => {
+    const onSubmit = jest.fn();
+    render(<UserDetailsForm initialUserValues={testUser} onSubmit={onSubmit} />);
+    // change the value
+    fireEvent.change(screen.getByLabelText("First name:"), {target: { value: changedUser.firstName },});
+    fireEvent.change(screen.getByLabelText("Last name:"), {target: { value: changedUser.lastName },});
+    fireEvent.change(screen.getByLabelText("Role:"), {target: { value: changedUser.role },});
+    // click on the submit button
+    fireEvent.click(screen.getByText("Submit"));
+    // check that the onSubmit function was called with the right values
+    expect(onSubmit).toHaveBeenCalledWith(changedUser);
+  })
 });
