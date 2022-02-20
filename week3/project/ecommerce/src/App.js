@@ -1,12 +1,12 @@
 import React from "react";
-import ShopItemContainer from "./components/ShopItemContainer";
+import AppProvider from "./provider";
+import ApplicationRouter from "./router";
 
 const App = () => {
- 
   return (
-    <div className="">
-      <ShopItemContainer />
-    </div>
+    <AppProvider>
+      <ApplicationRouter />
+    </AppProvider>
   );
 };
 

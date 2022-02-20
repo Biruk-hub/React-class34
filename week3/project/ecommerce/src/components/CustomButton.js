@@ -1,9 +1,9 @@
 import React from "react";
 
-const CustomButton = ({ text, onClick, active }) => {
+const CustomButton = ({ text, onClick, active, noClick }) => {
   return (
     <button
-      onClick={() => onClick(text)}
+      onClick={noClick ? null : () => onClick(text)}
       className={
         active
           ? "text-blue-500 bg-blue-100 text-base font-semibold py-1 px-4 rounded-full"

@@ -26,7 +26,7 @@ const ShopItemController = ({ selectedCategory = "" }) => {
     return isLoading ? (
       <CustomLoading />
     ) : (
-      products.map((product, index) => <ShopItem key={index} data={product} />)
+      products.map((product) => <ShopItem key={product.id} data={product} />)
     );
   };
 
