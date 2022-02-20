@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const NavBar = () => {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center m-2">
       <Link to="/">
         <CustomButton text="Products" noClick={true} />
       </Link>

@@ -1,11 +1,27 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { FavoriteContext } from "../provider/Favorite";
 
-const FavoriteIcon = () => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    
+const FavoriteIcon = ({ id }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [favorites, setFavorites] = useContext(FavoriteContext);
+
+  useEffect(() => {
+    setIsFavorite(favorites.includes(id));
+  }, [favorites, id]);
+
+  const handleClick = () => {
+    isFavorite
+      ? setFavorites(favorites.filter((favoriteId) => favoriteId !== id))
+      : setFavorites([...favorites, id]);
+  };
+
   return (
-    <button className={`rounded-full w-9 h-9 bg-gray-200 p-0 border-0 inline-flex items-center justify-center ${ isFavorite ? 'text-blue-500' : 'text-gray-500' }  ml-4`}
-    onClick={() => setIsFavorite(!isFavorite)}>
+    <button
+      className={`rounded-full w-9 h-9 bg-gray-200 p-0 border-0 inline-flex items-center justify-center ${
+        isFavorite ? "text-blue-500" : "text-gray-500"
+      }  ml-4`}
+      onClick={handleClick}
+    >
       <svg
         fill="currentColor"
         stroke-linecap="round"

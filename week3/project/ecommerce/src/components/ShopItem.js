@@ -26,7 +26,7 @@ const ShopItem = ({ data }) => {
         </div>
       </Link>
       <div className="absolute top-2 right-2">
-        <FavoriteIcon />
+        <FavoriteIcon id={data.id}/>
       </div>
     </div>
   );

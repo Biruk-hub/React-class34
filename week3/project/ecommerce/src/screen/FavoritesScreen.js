@@ -1,8 +1,9 @@
 import React from 'react'
+import FavoriteItemController from '../components/FavoriteItemController'
 
 const FavoritesScreen = () => {
   return (
-    <div>FavoritesScreen</div>
+    <FavoriteItemController />
   )
 }
 
