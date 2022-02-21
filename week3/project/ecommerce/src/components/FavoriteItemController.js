@@ -1,31 +1,41 @@
-import React, {useState, useEffect, useContext} from 'react'
-import ShopItem from './ShopItem'
-import CustomLoading from './CustomLoading'
-import { FavoriteContext } from '../provider/Favorite'
+import React, { useState, useEffect, useContext } from "react";
+import ShopItem from "./ShopItem";
+import CustomLoading from "./CustomLoading";
+import { FavoriteContext } from "../provider/Favorite";
 
 const FavoriteItemController = () => {
-    const URL = "https://fakestoreapi.com/";
-    const [products, setProducts] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [favorites , setFavorites] = useContext(FavoriteContext)
+  const URL = "https://fakestoreapi.com/";
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [favorites, setFavorites] = useContext(FavoriteContext);
 
-    // useEffect(() => {
-    //     setIsLoading(true)
-    //     const fetchProduct = async (id) => {
-    //         await fetch(URL + `products/${id}`)
-    //             .then((res) => res.json())
-    //             .then((data) => setProducts(data))
-    //             .catch((err) => alert(err.message))
-    //         setIsLoading(false)
-    //     }
-    //     favorites.forEach((id) => fetchProduct(id))
+  const fetchFavoriteProducts = async () => {
+    if (favorites.length > 0) {
+      setIsLoading(true);
+      const result = []
+      favorites.forEach(async (favorite) => {
+        await fetch(URL + `products/${favorite}`)
+          .then((res) => res.json())
+          .then((data) => result.push(data));
+      });
+      setProducts(result);
+      console.log(result);
+      setIsLoading(false);
+    }
+    else {
+      alert("No favorites");
+    }
+  // };
 
-    // } , [products, favorites])
+  // useEffect(() => {
+  //   fetchFavoriteProducts();
+  // }, []);
 
+  return isLoading ? (
+    <CustomLoading  />
+  ) : (
+    products.map((product) => <p>item loaded </p>)
+  );
+};
 
-  return (
-      <div>{`List of Favorite products id : ${favorites}`}</div>
-  )
-}
-
-export default FavoriteItemController
+export default FavoriteItemController;

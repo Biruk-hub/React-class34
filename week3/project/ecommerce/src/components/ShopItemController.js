@@ -26,7 +26,11 @@ const ShopItemController = ({ selectedCategory = "" }) => {
     return isLoading ? (
       <CustomLoading />
     ) : (
-      products.map((product) => <ShopItem key={product.id} data={product} />)
+      <div className="bg-gray-100 w-full flex flex-row p-2 mx-auto flex-wrap justify-center gap-6">
+        {products.map((product) => (
+          <ShopItem key={product.id} data={product} />
+        ))}
+      </div>
     );
   };
 
