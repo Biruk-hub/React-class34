@@ -53,11 +53,68 @@ function TestComponent({ userToLogin }) {
 }
 
 describe("LoggedInUserContext", () => {
-  it("Correctly sets the user as loggedIn if an initialUser is given", () => {});
+  it("Correctly sets the user as loggedIn if an initialUser is given", () => {
+    render(
+      <LoggedInUserContextProvider initialUser={{ name: "Biruk" }}>
+        <TestComponent />
+      </LoggedInUserContextProvider>
+    );
 
-  it("Correctly sets the user as logged out if no initialUser is given", () => {});
+    expect(
+      screen.getByTestId(TEST_ID.LOGGED_IN_USER).getAttribute("data-value")
+    ).toBe(JSON.stringify({ name: "Biruk" }));
+    expect(
+      screen.getByTestId(TEST_ID.IS_LOGGED_IN).getAttribute("data-value")
+    ).toBe("true");
+  });
 
-  it("logs the user in if you use the login function", () => {});
+  it("Correctly sets the user as logged out if no initialUser is given", () => {
+    render(
+      <LoggedInUserContextProvider>
+        <TestComponent />
+      </LoggedInUserContextProvider>
+    );
 
-  it("logs the user out if you use the logout function", () => {});
+    expect(
+      screen.getByTestId(TEST_ID.LOGGED_IN_USER).getAttribute("data-value")
+    ).toBe("null");
+    expect(
+      screen.getByTestId(TEST_ID.IS_LOGGED_IN).getAttribute("data-value")
+    ).toBe("false");
+  });
+
+  it("logs the user in if you use the login function", () => {
+    render(
+      <LoggedInUserContextProvider>
+        <TestComponent userToLogin={{ name: "Biruk" }} />
+      </LoggedInUserContextProvider>
+    );
+
+    fireEvent.click(screen.getByTestId(TEST_ID.LOGIN));
+
+    expect(
+      screen.getByTestId(TEST_ID.LOGGED_IN_USER).getAttribute("data-value")
+    ).toBe(JSON.stringify({ name: "Biruk" }));
+    expect(
+      screen.getByTestId(TEST_ID.IS_LOGGED_IN).getAttribute("data-value")
+    ).toBe("true");
+  });
+
+  it("logs the user out if you use the logout function", () => {
+    render(
+      <LoggedInUserContextProvider>
+        <TestComponent userToLogin={{ name: "John" }} />
+      </LoggedInUserContextProvider>
+    );
+
+    fireEvent.click(screen.getByTestId(TEST_ID.LOGIN));
+    fireEvent.click(screen.getByTestId(TEST_ID.LOGOUT));
+
+    expect(
+      screen.getByTestId(TEST_ID.LOGGED_IN_USER).getAttribute("data-value")
+    ).toBe("null");
+    expect(
+      screen.getByTestId(TEST_ID.IS_LOGGED_IN).getAttribute("data-value")
+    ).toBe("false");
+  });
 });

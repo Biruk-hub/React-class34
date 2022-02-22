@@ -12,7 +12,7 @@ import Routing from "./Routing";
 
 function RoutingApp() {
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <nav>
         <Link to="/">Home</Link>
         <Link to="/users">Users</Link>

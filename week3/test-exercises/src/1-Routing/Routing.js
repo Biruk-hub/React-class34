@@ -6,7 +6,7 @@ import UserDetails from "./UserDetails";
 
 function Routing() {
   return (
-    <Routes>
+    <Routes >
       <Route path="/" element={<Home />} />
       <Route path="/users" element={<Users />} />
       <Route path="/users/:id" element={<UserDetails />} />

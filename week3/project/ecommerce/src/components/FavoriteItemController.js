@@ -9,33 +9,24 @@ const FavoriteItemController = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [favorites, setFavorites] = useContext(FavoriteContext);
 
-  const fetchFavoriteProducts = async () => {
-    if (favorites.length > 0) {
-      setIsLoading(true);
-      const result = []
-      favorites.forEach(async (favorite) => {
-        await fetch(URL + `products/${favorite}`)
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      favorites.forEach(async (favoriteId) => {
+        await fetch(URL + `products/${favoriteId}`)
           .then((res) => res.json())
-          .then((data) => result.push(data));
+          .then((data) => setProducts([...products, data]));
       });
-      setProducts(result);
-      console.log(result);
       setIsLoading(false);
-    }
-    else {
-      alert("No favorites");
-    }
-  // };
+    })();
+  },[products, favorites]);
 
-  // useEffect(() => {
-  //   fetchFavoriteProducts();
-  // }, []);
-
-  return isLoading ? (
-    <CustomLoading  />
-  ) : (
-    products.map((product) => <p>item loaded </p>)
-  );
+  return(
+    <div>
+      <p>Favorite : {favorites}</p>
+      {console.log(`products : ${products}`)}
+    </div>
+  )
 };
 
 export default FavoriteItemController;
