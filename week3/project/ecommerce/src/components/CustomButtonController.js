@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
 import CustomButton from "./CustomButton";
 import CustomLoading from "./CustomLoading";
+import useFetch from "../hooks/useFetch";
 
 const CustomButtonController = ({ categoryHandler }) => {
-  const URL = "https://fakestoreapi.com/";
+  const URL = "https://fakestoreapi.com/products/categories";
   const [category, setCategory] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
+
+  const { isLoading, data, error } = useFetch({ url: URL });
+
   useEffect(() => {
-    (async () => {
-      await fetch(URL + "products/categories")
-        .then((res) => res.json())
-        .then((data) => setCategory(data))
-        .catch((err) => alert(err.message));
-    })();
-    return () => {
-      setCategory([]);
-    };
-  }, []);
+    if (data) {
+      setCategory(data);
+    }
+  }, [data]);
 
   const handleCategory = (category) => {
     categoryHandler(category);
@@ -24,7 +22,11 @@ const CustomButtonController = ({ categoryHandler }) => {
   };
   return (
     <>
-      {category.length > 0 ? (
+      {isLoading ? (
+        <CustomLoading text="Loading categories..." />
+      ) : error ? (
+        <CustomLoading text={error.message} />
+      ) : (
         category.map((category, index) => (
           <CustomButton
             key={index}
@@ -33,8 +35,6 @@ const CustomButtonController = ({ categoryHandler }) => {
             active={activeCategory === category}
           />
         ))
-      ) : (
-        <CustomLoading text="Loading categories..." />
       )}
     </>
   );
