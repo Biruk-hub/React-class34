@@ -9,24 +9,45 @@ const FavoriteItemController = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [favorites, setFavorites] = useContext(FavoriteContext);
 
+  const getProducts = async (id) => {
+    const response = await fetch(URL + `products/${id}`);
+    const data = await response.json();
+    setProducts((prevData) => [...prevData, data]);
+  };
+
   useEffect(() => {
     setIsLoading(true);
-    (async () => {
-      favorites.forEach(async (favoriteId) => {
-        await fetch(URL + `products/${favoriteId}`)
-          .then((res) => res.json())
-          .then((data) => setProducts([...products, data]));
-      });
-      setIsLoading(false);
-    })();
-  },[products, favorites]);
+    setProducts([]);
+    favorites.forEach((id) => {
+      getProducts(id);
+    });
+    setIsLoading(false);
+  }, [favorites]);
 
-  return(
-    <div>
-      <p>Favorite : {favorites}</p>
-      {console.log(`products : ${products}`)}
+  const renderUI = () => {
+    if (favorites.length > 0) {
+      return products.map((product) => (
+        <ShopItem key={product.id} data={product} />
+      ));
+    } else {
+      return (
+        <div className="text-center">
+          <h1>No Favorites</h1>
+        </div>
+      );
+    }
+  };
+
+  return isLoading ? (
+    <CustomLoading />
+  ) : (
+    <div className="bg-gray-100 w-full flex flex-row p-2 mx-auto flex-wrap justify-center gap-6">
+      {/* {products.map((product) => (
+        <ShopItem key={product.id} data={product} />
+      ))} */}
+      { renderUI() }
     </div>
-  )
+  );
 };
 
 export default FavoriteItemController;

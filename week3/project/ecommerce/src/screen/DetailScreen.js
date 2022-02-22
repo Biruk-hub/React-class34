@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FavoriteIcon from "../components/FavoriteIcon";
-/**
- *
- * @returns {"id":3,"title":"Mens Cotton Jacket","price":55.99,"description":"great outerwear jackets for Spring/Autumn/Winter, suitable for many occasions, such as working, hiking, camping, mountain/rock climbing, cycling, traveling or other outdoors. Good gift choice for you or your family member. A warm hearted love to Father, husband or son in this thanksgiving or Christmas Day.","category":"men's clothing","image":"https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg","rating":{"rate":4.7,"count":500}}
- */
 
 const DetailScreen = () => {
   const URL = "https://fakestoreapi.com/";
@@ -28,11 +24,12 @@ const DetailScreen = () => {
     for (let i = 1; i < product.rating.rate; i++) {
       stars.push(
         <svg
+          key={i}
           fill="currentColor"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
           className="w-4 h-4 text-indigo-500"
           viewBox="0 0 24 24"
         >
@@ -45,11 +42,12 @@ const DetailScreen = () => {
       for (let i = 0; i < emptyStars; i++) {
         stars.push(
           <svg
+            key={5 - i}
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
             className="w-4 h-4 text-indigo-500"
             viewBox="0 0 24 24"
           >
@@ -81,16 +79,16 @@ const DetailScreen = () => {
               </h1>
               <div className="flex mb-4">
                 <span className="flex items-center">
-                  { getStars()}
+                  {getStars()}
                   <span className="text-gray-600 ml-3">{`${product.rating.rate} Reviews`}</span>
                 </span>
                 <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
                   <a className="text-gray-500">
                     <svg
                       fill="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       className="w-5 h-5"
                       viewBox="0 0 24 24"
                     >
@@ -100,9 +98,9 @@ const DetailScreen = () => {
                   <a className="text-gray-500">
                     <svg
                       fill="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       className="w-5 h-5"
                       viewBox="0 0 24 24"
                     >
@@ -112,9 +110,9 @@ const DetailScreen = () => {
                   <a className="text-gray-500">
                     <svg
                       fill="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       className="w-5 h-5"
                       viewBox="0 0 24 24"
                     >
@@ -123,9 +121,7 @@ const DetailScreen = () => {
                   </a>
                 </span>
               </div>
-              <p className="leading-relaxed">
-                {product.description}
-              </p>
+              <p className="leading-relaxed">{product.description}</p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
@@ -146,9 +142,9 @@ const DetailScreen = () => {
                       <svg
                         fill="none"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         className="w-4 h-4"
                         viewBox="0 0 24 24"
                       >
@@ -162,7 +158,7 @@ const DetailScreen = () => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   {`$ ${product.price}`}
                 </span>
-                <FavoriteIcon id={product.id}/>
+                <FavoriteIcon id={product.id} />
               </div>
             </div>
           </div>
