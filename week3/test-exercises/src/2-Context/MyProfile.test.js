@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import LoggedInUserContext from "./LoggedInUserContext";
+import { LoggedInUserContextProvider } from "./LoggedInUserContext";
 
 import MyProfile from "./MyProfile";
 
@@ -14,13 +14,11 @@ import TEST_ID from "./testids";
  * Besides, we should not be testing the workings of the Provider here, we need to test MyProfile.
  * So we can use the same trick as we use in testing the Context, a specific component just for this test that will create a provider in the state we want it!
  */
-function TestComponent({ loggedInUser, isLoggedIn, login, logout }) {
+function TestComponent({ loggedInUser }) {
   return (
-    <LoggedInUserContext.Provider
-      value={{ loggedInUser, isLoggedIn, login, logout }}
-    >
+    <LoggedInUserContextProvider initialUser={loggedInUser}>
       <MyProfile />
-    </LoggedInUserContext.Provider>
+    </LoggedInUserContextProvider>
   );
 }
 
@@ -31,9 +29,28 @@ function TestComponent({ loggedInUser, isLoggedIn, login, logout }) {
  * - If the user is not logged in we should be showing a message to login
  */
 describe("MyProfile", () => {
-  it("Displays the name of the logged in user", () => {});
+  it("Displays the name of the logged in user", () => {
+    render(<TestComponent loggedInUser={{ name: "Biruk" }} />);
 
-  it("Allows the user to log out if the user is logged in", () => {});
+    expect(screen.getByText("Welcome back Biruk!")).toBeInTheDocument();
+  });
 
-  it("Shows a message to login if the user is not logged in", () => {});
+  it("Allows the user to log out if the user is logged in", () => {
+    render(<TestComponent loggedInUser={{ name: "Biruk" }} />);
+
+    fireEvent.click(screen.getByTestId(TEST_ID.MYPROFILE_LOGOUT_BUTTON));
+
+    expect(screen.queryByText("Welcome back Biruk!")).not.toBeInTheDocument();
+    expect(
+      screen.getByText("You are not logged in! Please login first.")
+    ).toBeInTheDocument();
+  });
+
+  it("Shows a message to login if the user is not logged in", () => {
+    render(<TestComponent />);
+
+    expect(
+      screen.getByText("You are not logged in! Please login first.")
+    ).toBeInTheDocument();
+  });
 });
